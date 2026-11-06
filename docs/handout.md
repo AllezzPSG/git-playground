@@ -216,30 +216,18 @@ GitHub Desktop：切到 **History** 标签。
 
 ✅ 确认：能看到自己刚写的提交说明。
 
+![p1.6](img/p1.6.png)
+
 ### ✅ 练习 1 验收标准
 
-- [ ] 本地已克隆仓库，`profile/` 目录存在
-- [ ] 当前分支是 `profile/<username>`
-- [ ] `profile/<username>.md` 已创建，内容正确
-- [ ] `git status` 显示工作区干净
-- [ ] `git log` 中能看到自己的提交
+- [ ] 本地已克隆仓库，`profile/` 目录存在。
+- [ ] 当前分支是新建的分支，而非原分支 `main`.
+- [ ] `profile/<username>.md` 已创建。
+- [ ] changes 标签左侧显示工作区干净
+- [ ] history 标签中能看到自己的提交
 - [ ] **此刻在 GitHub 网页上打开仓库，看不到这个文件**
 
-🎤 最后一条是刻意设计的。**让学员互相确认一次**："你打开网页，是不是也没有？" 这直观地建立了"本地仓库 ≠ 远程仓库"的认识，为练习 2 做铺垫。
-
-### ⚠️ 练习 1 常见故障
-
-| 现象 | 原因 | 处理 |
-| --- | --- | --- |
-| `git: command not found` | 未安装 Git，或安装后终端未重启 | 重新安装并**重启终端** |
-| clone 报 `Repository not found` / `Permission denied` | 未接受组织邀请，或地址拼错 | 检查邀请是否已接受；确认仓库名 |
-| 分支名打错 | 手误 | `git branch -m <新分支名>` |
-| commit 报 `Please tell me who you are` | 未配置身份 | 见 0.6，执行 `git config` |
-| commit 报 `nothing to commit` | 文件没保存，或没 add | 保存文件后 `git status` 检查 |
-| 改错了文件 | — | 未 add：`git restore <file>`；已 add：`git restore --staged <file>` |
-| Desktop 里找不到刚建的文件 | 文件建在了仓库目录之外 | 确认编辑器打开的目录是仓库根目录 |
-
-🎤 **课堂控制**：30 分钟内应保证 90% 的人走到第 7 步。**卡在 clone 的同学，立刻交给助教单独处理，不要占用全班时间。**
+注意：这里所有的操作都是在本地 repo 进行的，打开 Github 远程 repo 并不会有任何改动。
 
 ---
 
@@ -252,9 +240,9 @@ GitHub Desktop：切到 **History** 标签。
 
 | 方向 | 命令 | 作用 |
 | --- | --- | --- |
-| 本地 -> 远程 | `git push` | 上传自己的提交 |
-| 远程 -> 本地 | `git pull` | 下载并合并远程更新 |
-| 远程 -> 本地（只看） | `git fetch` | 下载但先不合并 |
+| 本地 repo -> 远程 repo | `git push` | 上传自己的提交 |
+| 远程 repo -> 本地 repo | `git pull` | 下载并合并远程更新 |
+| 远程 repo -> 本地工作区 | `git fetch` | 下载但先不合并 |
 
 ### 4.2 为什么要用分支
 
@@ -270,6 +258,8 @@ GitHub Desktop：切到 **History** 标签。
 ### 4.3 Pull Request 是什么
 
 > Pull Request（PR）= 一份"请把我的分支合并进 `main`"的正式申请。
+
+相当于需要审查的 `git pull`.
 
 PR 页面包含了协作需要的全部信息：
 
@@ -299,9 +289,7 @@ PR 页面包含了协作需要的全部信息：
 
 评论方式：`Comment`（提问/建议）、`Approve`（同意合并）、`Request changes`（必须先改）。
 
-🎤 礼仪：**对事不对人**。评论写"这里少了一个右括号"，而不是"你怎么这么粗心"。
-
-### 4.5 Issue（了解即可）
+### 4.5 Issue
 
 Issue 是任务和问题的记录单，适合课前收集任务、课后跟踪待办。
 
@@ -309,25 +297,21 @@ Issue 是任务和问题的记录单，适合课前收集任务、课后跟踪�
 
 ### 4.6 标准协作流程（核心）
 
-这是你课后真正要记住的流程，**共 9 步**：
+一次完整的协作流程：
 
-```
-1. 更新 main        git switch main && git pull
-2. 创建分支         git switch -c feature/xxx
-3. 修改并提交       git add <file> && git commit -m "..."
-4. 推送             git push -u origin feature/xxx
-5. 打开 PR          分支 -> main
-6. 请求审查         同伴 Approve
-7. 合并             Merge pull request
-8. 清理分支         删本地分支 + 删远程分支
-9. 再次同步         git switch main && git pull
-```
 
-🎤 **第 1 步和第 9 步最容易被忘**。忘了第 1 步，你会基于过期代码开工，最后被迫解决冲突；忘了第 9 步，你的本地 `main` 是旧的，下次开机就出事。
-
-✅ 本部分验收（口头抽查）
-- 说出第 1 步和第 9 步分别是什么，以及为什么不能省。
-- 回答："PR 合并了，我本地就有最新代码了吗？"（没有，需要 pull）
+1. 更新 main：上侧按钮切换到 main 后点击 fetch origin
+2. 创建分支：上侧分支按钮 -> new branch
+3. 修改并提交：主要工作，左侧 Changes -> 勾选 -> 填 Summary -> Commit.
+4. 推送：上侧右侧按钮 publish branch（有时可能在下拉菜单里）。
+5. 确定当前开发结束后，发起 PR：
+   - base：main
+   - compare：你的分支
+   - 按要求填写标题和描述
+6. 等待审查（可以线下拷打）
+7. 审查 approve 之后合并
+8. 清理分支：删本地分支 + 删远程分支
+9. 再次同步：上侧按钮切换到 main 后点击 fetch origin
 
 ---
 
@@ -337,22 +321,17 @@ Issue 是任务和问题的记录单，适合课前收集任务、课后跟踪�
 
 把练习 1 的本地提交推送到 GitHub，并完整走完一次 **PR -> Review -> Merge -> 同步 -> 清理**。
 
-### 前置条件
-
-- 练习 1 已验收通过。
-- 已按公布的分组找到你的搭档（两人一组，互相 review）。
-
 ### 🖥️ 操作步骤
 
 #### 第 1 步：推送分支
 
-```bash
-git push -u origin profile/<username>
-```
+GitHub Desktop：点 **Publish Branch**。
 
-GitHub Desktop：点 **Push origin**。
+![p2.1](img/p2.1.png)
 
-✅ 确认：打开 GitHub 仓库页面，能看到 `profile/<username>` 分支。
+✅ 确认：打开 GitHub 仓库页面，能看到你的分支（左侧下拉菜单切换 branch）。
+
+![p2.2](img/p2.2.png)
 
 #### 第 2 步：创建 Pull Request
 
