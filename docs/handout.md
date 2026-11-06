@@ -154,7 +154,7 @@ graph TD
 
 ### 目标
 
-在不涉及任何上传的情况下，完成 `clone → 建分支 → 改文件 → add → commit`，并亲眼确认改动**只存在于自己电脑上**。
+在不涉及任何上传的情况下，完成 `clone -> 建分支 -> 改文件 -> add -> commit`，并亲眼确认改动**只存在于自己电脑上**。
 
 ### 前置条件
 
@@ -166,7 +166,7 @@ graph TD
 
 #### 第 1 步：克隆仓库
 
-GitHub Desktop：**File → Clone repository → URL** → 粘贴地址 → 选择本地路径 → **Clone**。
+GitHub Desktop：**File -> Clone repository -> URL** -> 粘贴地址 -> 选择本地路径 -> **Clone**。
 
 ![p1.1](img/p1.1.png)
 
@@ -174,72 +174,47 @@ GitHub Desktop：**File → Clone repository → URL** → 粘贴地址 → 选�
 
 #### 第 2 步：创建自己的分支
 
-GitHub Desktop：顶部 **Current Branch → New Branch** → 输入 `profile/<username>` → **Create Branch**。
+GitHub Desktop：顶部 **Current Branch -> New Branch** -> 输入分支名称 -> **Create Branch**。
 
-✅ 确认：`git branch` 或窗口顶部的分支名显示为 `profile/<username>`。
+![p1.3](img/p1.3.png)
 
-🎤 命名统一为 `profile/<username>`，40 人的分支才不会有重名和歧义。
+分支名称推荐命名为自己的用户名等，以防止冲突。请注意：无论如何不要在 `main` 分支上提交。
 
 #### 第 3 步：创建自我介绍文件
 
-新建 `profile/<username>.md`，内容参考：
-
-```markdown
-# 你的名字
-
-- GitHub: @<username>
-- 一句话介绍：我想用代码做什么
-- 今天学到的一个命令：`git commit`
-```
+新建 `profile/<username>.md`，内容参考 `profile/qwqAutomaton.md`.
 
 ⚠️ **不要在文件里写手机号、住址、身份证号等个人敏感信息。** 这是一个公开仓库。
 
+随便用什么编辑器都行。记事本写一个 txt 也可以。只要新建一个文件即可。
+
 #### 第 4 步：查看自己改了什么
 
-```bash
-git status
-git diff
-```
+GitHub Desktop：左侧 changes 标签页可以显示差异。
 
-GitHub Desktop：打开 **Changes** 标签，点击文件可看到逐行差异。
-
-✅ 确认：**只有你自己的那个文件**出现在改动列表里。
-
-🎤 强调 **先看再提交**：`git status` 是本节课使用频率最高的命令。
+![p1.4](img/p1.4.png)
 
 #### 第 5 步：加入暂存区
 
-```bash
-git add profile/<username>.md
-```
-
 GitHub Desktop：在 **Changes** 里**勾选**这个文件。
-
-⚠️ 不要用 `git add .`。初学者容易把无关文件、临时文件一起提交，指定文件名更安全。
 
 #### 第 6 步：提交
 
-```bash
-git commit -m "docs: add profile for <username>"
-```
+GitHub Desktop：右下角填 **Summary**（必填）-> 点蓝色按钮 **Commit `filecount` files to `branchname`**。
 
-GitHub Desktop：右下角填 **Summary**（必填）→ 点 **Commit to profile/<username>**。
+推荐 commit message 写法：**动词开头，说明这次改了什么**。
 
-提交信息写法：**动词开头，说明这次改了什么**。
 - ✅ `docs: add profile for alice`
 - ✅ `fix: correct typo in conflict.md`
-- ❌ `update`、`1`、`asdf`
+- ❌ `update`、`test`、`asdf`
+
+![p1.5](img/p1.5.png)
 
 #### 第 7 步：验证
 
-```bash
-git log --oneline -3
-git status
-```
-
 GitHub Desktop：切到 **History** 标签。
 
-✅ 确认：能看到自己刚写的提交说明；`git status` 显示 `nothing to commit, working tree clean`。
+✅ 确认：能看到自己刚写的提交说明。
 
 ### ✅ 练习 1 验收标准
 
@@ -277,9 +252,9 @@ GitHub Desktop：切到 **History** 标签。
 
 | 方向 | 命令 | 作用 |
 | --- | --- | --- |
-| 本地 → 远程 | `git push` | 上传自己的提交 |
-| 远程 → 本地 | `git pull` | 下载并合并远程更新 |
-| 远程 → 本地（只看） | `git fetch` | 下载但先不合并 |
+| 本地 -> 远程 | `git push` | 上传自己的提交 |
+| 远程 -> 本地 | `git pull` | 下载并合并远程更新 |
+| 远程 -> 本地（只看） | `git fetch` | 下载但先不合并 |
 
 ### 4.2 为什么要用分支
 
@@ -341,7 +316,7 @@ Issue 是任务和问题的记录单，适合课前收集任务、课后跟踪�
 2. 创建分支         git switch -c feature/xxx
 3. 修改并提交       git add <file> && git commit -m "..."
 4. 推送             git push -u origin feature/xxx
-5. 打开 PR          分支 → main
+5. 打开 PR          分支 -> main
 6. 请求审查         同伴 Approve
 7. 合并             Merge pull request
 8. 清理分支         删本地分支 + 删远程分支
@@ -360,7 +335,7 @@ Issue 是任务和问题的记录单，适合课前收集任务、课后跟踪�
 
 ### 目标
 
-把练习 1 的本地提交推送到 GitHub，并完整走完一次 **PR → Review → Merge → 同步 → 清理**。
+把练习 1 的本地提交推送到 GitHub，并完整走完一次 **PR -> Review -> Merge -> 同步 -> 清理**。
 
 ### 前置条件
 
@@ -381,7 +356,7 @@ GitHub Desktop：点 **Push origin**。
 
 #### 第 2 步：创建 Pull Request
 
-网页：进入仓库 → 通常会提示 **Compare & pull request**；若没有，走 **Pull requests → New pull request**。
+网页：进入仓库 -> 通常会提示 **Compare & pull request**；若没有，走 **Pull requests -> New pull request**。
 
 - **base**：`main`
 - **compare**：`profile/<username>`
@@ -400,7 +375,7 @@ GitHub Desktop 里也会出现 **Preview Pull Request** 按钮，效果相同。
 
 #### 第 4 步：互相 Review（配对进行）
 
-搭档 A 打开 B 的 PR → **Files changed** → 点行号旁的 `+` 留一条**具体**评论 → **Review changes** → 选 **Approve** → **Submit review**。
+搭档 A 打开 B 的 PR -> **Files changed** -> 点行号旁的 `+` 留一条**具体**评论 -> **Review changes** -> 选 **Approve** -> **Submit review**。
 
 要求：每人至少留 1 条具体评论。
 - ✅ "这里 GitHub 用户名和分支名一致，没问题。"
@@ -408,7 +383,7 @@ GitHub Desktop 里也会出现 **Preview Pull Request** 按钮，效果相同。
 
 #### 第 5 步：合并
 
-由 PR 作者（或 reviewer）点 **Merge pull request → Confirm merge**。
+由 PR 作者（或 reviewer）点 **Merge pull request -> Confirm merge**。
 
 🎤 **本节课统一使用默认合并方式（Create a merge commit）**，不要在这里讲 squash / rebase，避免引入第二套历史模型。
 
@@ -419,7 +394,7 @@ git switch main
 git pull
 ```
 
-GitHub Desktop：**Current Branch → main** → **Pull origin**。
+GitHub Desktop：**Current Branch -> main** -> **Pull origin**。
 
 ✅ 确认：`profile/` 里现在能看到你和搭档的文件。
 
@@ -430,7 +405,7 @@ git branch -d profile/<username>
 git push origin --delete profile/<username>
 ```
 
-GitHub Desktop：**Branch → Delete…**；远程分支可在合并后的 PR 页面点 **Delete branch**。
+GitHub Desktop：**Branch -> Delete…**；远程分支可在合并后的 PR 页面点 **Delete branch**。
 
 > 合并后保留分支不是错误，但会让分支列表越来越乱。**约定：合并即删除。**
 
@@ -456,7 +431,7 @@ GitHub Desktop：**Branch → Delete…**；远程分支可在合并后的 PR �
 | 现象 | 原因 | 处理 |
 | --- | --- | --- |
 | push 报 `Updates were rejected` | 远程有你没有的提交 | 先 `git pull`，再 `git push` |
-| 看不到 Compare & pull request 按钮 | 分支刚推送或页面未刷新 | 手动 **Pull requests → New pull request** 选择分支 |
+| 看不到 Compare & pull request 按钮 | 分支刚推送或页面未刷新 | 手动 **Pull requests -> New pull request** 选择分支 |
 | PR 里出现大量无关文件 | 分支从过期的 `main` 创建 | 关闭 PR，从最新 `main` 重建分支后重新提交（本次就这么简单处理） |
 | Merge 按钮是灰色的 | 存在冲突 / 无权限 / 有未通过的检查 | 看页面上的具体提示文字 |
 | 不知道该在哪个分支 | — | `git status` 第一行，或 Desktop 顶部 |
@@ -503,7 +478,7 @@ Git 合并时会逐行比对。**当两个人修改了同一个文件的同一�
 1. **打开文件**，搜索 `<<<<<<<`，找到每一处冲突。
 2. **决定内容**：保留你的、保留对方的、或两边都保留/改写。
 3. **删除全部标记行**（`<<<<<<<`、`=======`、`>>>>>>>`）。
-4. **保存 → add → 提交**：
+4. **保存 -> add -> 提交**：
 
 ```bash
 git add conflict.md
@@ -566,15 +541,15 @@ Git 还有 `rebase` 可以"整理历史"。**本次课程不使用**，原因是
 🎤 按下面的顺序做，每一步都说明"现在在哪个分支、改动在哪个区域"。
 
 1. 展示 `conflict.md` 的初始内容（只有一行测试文字）。
-2. 学生 A 的分支把**第一行**改成 A 的内容 → push → 开 PR。
-3. 学生 B 的分支把**同一行**改成 B 的内容 → push → 开 PR。
+2. 学生 A 的分支把**第一行**改成 A 的内容 -> push -> 开 PR。
+3. 学生 B 的分支把**同一行**改成 B 的内容 -> push -> 开 PR。
 4. 先合并 A 的 PR：成功，`main` 现在是 A 的内容。
 5. 打开 B 的 PR：显示 **This branch has conflicts that must be resolved**。
    > 讲："B 的改动是基于旧内容写的，而 `main` 已经变了，Git 不知道留哪句。"
 6. 点 **Resolve conflicts**，展示三段式标记。
 7. 现场决定：保留 B 的内容，或两句话都保留——**并说明为什么这样决定**。
-8. 删除标记 → **Mark as resolved** → **Commit merge**。
-9. 回到 PR → **Merge pull request**。
+8. 删除标记 -> **Mark as resolved** -> **Commit merge**。
+9. 回到 PR -> **Merge pull request**。
 10. 打开 `main` 上的最终文件，确认没有残留标记，内容符合预期。
 
 🎤 演示后必须问一句："**刚才哪一步是 Git 做不了的？**" 答案：第 7 步的内容取舍，只有人能决定。
@@ -587,7 +562,7 @@ Git 还有 `rebase` 可以"整理历史"。**本次课程不使用**，原因是
 2. 各自建分支：`git switch -c conflict/<username>`。
 3. 各自修改 `conflict-group-<组号>.md` 的**第一行**为不同内容，commit、push、开 PR。
 4. 先合并第一个人的 PR。
-5. 第二个人刷新自己的 PR，看到冲突 → **Resolve conflicts**。
+5. 第二个人刷新自己的 PR，看到冲突 -> **Resolve conflicts**。
 6. 小组商量保留什么内容，然后在网页里解决，提交合并。
 7. 两人都 `git switch main && git pull`，确认最终文件内容一致。
 
@@ -644,16 +619,16 @@ Git 还有 `rebase` 可以"整理历史"。**本次课程不使用**，原因是
 
 | Git 命令 | GitHub Desktop 操作 |
 | --- | --- |
-| `git clone` | File → Clone repository |
-| `git switch -c` | Current Branch → New Branch |
-| `git switch` | Current Branch → 选择分支 |
+| `git clone` | File -> Clone repository |
+| `git switch -c` | Current Branch -> New Branch |
+| `git switch` | Current Branch -> 选择分支 |
 | `git status` / `git diff` | Changes 标签 |
 | `git add` | Changes 中勾选文件 |
 | `git commit` | Summary + Commit to `<branch>` |
 | `git push` | Push origin |
 | `git pull` | Fetch origin / Pull origin |
 | `git log` | History 标签 |
-| `git branch -d` | Branch → Delete |
+| `git branch -d` | Branch -> Delete |
 
 ## 附录 C：故障排查总表
 
