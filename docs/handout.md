@@ -337,60 +337,41 @@ GitHub Desktop：点 **Publish Branch**。
 
 网页：进入仓库 -> 通常会提示 **Compare & pull request**；若没有，走 **Pull requests -> New pull request**。
 
-- **base**：`main`
-- **compare**：`profile/<username>`
-- **标题**：`Add profile for <username>`
-- **描述**：我改了什么 / 为什么改
+![p2.3](img/p2.3.png)
+
+按需填写标题和描述、目标 branch、来源 branch 等信息。
+
+![p2.4](img/p2.4.png)
 
 然后 **Create pull request**。
 
 GitHub Desktop 里也会出现 **Preview Pull Request** 按钮，效果相同。
 
-#### 第 3 步：自查 diff
+#### 第 3 步：等待/给予 review
 
-在 PR 的 **Files changed** 里确认：**只有你自己的文件**。
+找一个还没合并的 PR，点击 Files Changed 标签页进行 review，并发表评论。如果可行，点击 Approve；否则 Request Changes.
 
-⚠️ 如果出现了别人的文件或无关改动，先别合并，回到第 4 步的故障表处理。
-
-#### 第 4 步：互相 Review（配对进行）
-
-搭档 A 打开 B 的 PR -> **Files changed** -> 点行号旁的 `+` 留一条**具体**评论 -> **Review changes** -> 选 **Approve** -> **Submit review**。
-
-要求：每人至少留 1 条具体评论。
-- ✅ "这里 GitHub 用户名和分支名一致，没问题。"
-- ❌ "LGTM"（不算有效 review）
-
-#### 第 5 步：合并
+#### 第 4 步：合并
 
 由 PR 作者（或 reviewer）点 **Merge pull request -> Confirm merge**。
 
-🎤 **本节课统一使用默认合并方式（Create a merge commit）**，不要在这里讲 squash / rebase，避免引入第二套历史模型。
+由于合并的原理是创建一个新的 merge commit，你需要填写 commit message（此时先采用默认即可）。
 
-#### 第 6 步：同步 `main`
+![p2.5](img/p2.5.png)
 
-```bash
-git switch main
-git pull
-```
+#### 第 5 步：同步 `main`
 
-GitHub Desktop：**Current Branch -> main** -> **Pull origin**。
+由于 PR 合并后，远程的 `main` 已经更新了，本地的 `main` 还没有同步。我们需要同步本地的 `main`.
+
+GitHub Desktop：上侧按钮切换到 main，然后点击 fetch origin.
 
 ✅ 确认：`profile/` 里现在能看到你和搭档的文件。
 
-#### 第 7 步：清理分支
+#### 第 6 步：清理分支
 
-```bash
-git branch -d profile/<username>
-git push origin --delete profile/<username>
-```
+GitHub Desktop：**Branch -> Delete...**；远程分支可在合并后的 PR 页面点 **Delete branch**。
 
-GitHub Desktop：**Branch -> Delete…**；远程分支可在合并后的 PR 页面点 **Delete branch**。
-
-> 合并后保留分支不是错误，但会让分支列表越来越乱。**约定：合并即删除。**
-
-#### 第 8 步：最终验证
-
-在 GitHub 网页上查看 `profile/` 目录，确认自己的文件已出现在 `main` 中。
+不删理论上也没事，但是会越来越乱。所以推荐合并后就删掉。
 
 ### ✅ 练习 2 验收标准
 
@@ -402,21 +383,6 @@ GitHub Desktop：**Branch -> Delete…**；远程分支可在合并后的 PR 页
 | 4 | 自己至少给同伴留了 1 条评论 | 搭档的 PR 页面 |
 | 5 | 本地 `main` 已是最新（含两人文件） | `git log --oneline` |
 | 6 | 本地与远程的功能分支已删除 | `git branch -a` |
-
-🎤 **课堂控制**：第 4、5 步会形成等待队列。规则是 **"谁先完成，谁去 review 对方"**，不要按学号排队。助教负责兜底 review 落单的同学。
-
-### ⚠️ 练习 2 常见故障
-
-| 现象 | 原因 | 处理 |
-| --- | --- | --- |
-| push 报 `Updates were rejected` | 远程有你没有的提交 | 先 `git pull`，再 `git push` |
-| 看不到 Compare & pull request 按钮 | 分支刚推送或页面未刷新 | 手动 **Pull requests -> New pull request** 选择分支 |
-| PR 里出现大量无关文件 | 分支从过期的 `main` 创建 | 关闭 PR，从最新 `main` 重建分支后重新提交（本次就这么简单处理） |
-| Merge 按钮是灰色的 | 存在冲突 / 无权限 / 有未通过的检查 | 看页面上的具体提示文字 |
-| 不知道该在哪个分支 | — | `git status` 第一行，或 Desktop 顶部 |
-| 合并后本地看不到搭档的文件 | 没有 `pull` | `git switch main && git pull` |
-| 误删了本地分支 | — | 已合并的内容都在 `main`，重建分支即可；未合并的用 `git reflog` 找回（找助教） |
-| 想撤销这次 PR 的合并 | — | 不要自己操作，找助教；本次不引入 revert |
 
 ---
 
