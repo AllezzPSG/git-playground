@@ -369,9 +369,11 @@ GitHub Desktop：上侧按钮切换到 main，然后点击 fetch origin.
 
 #### 第 6 步：清理分支
 
-GitHub Desktop：**Branch -> Delete...**；远程分支可在合并后的 PR 页面点 **Delete branch**。
+GitHub Desktop：上侧 branch 菜单找到自己的 branch，右键 delete；远程分支可在合并后的 PR 页面点 **Delete branch** 或由 Github Desktop 自动删除。
 
-不删理论上也没事，但是会越来越乱。所以推荐合并后就删掉。
+不删理论上也没事，但是会越来越乱。所以推荐合并后就删掉.
+
+![p2.6](img/p2.6.png)
 
 ### ✅ 练习 2 验收标准
 
@@ -398,43 +400,28 @@ Git 合并时会逐行比对。**当两个人修改了同一个文件的同一�
 2. 修改了**同一个文件**的**同一片区域**（通常是相邻几行）；
 3. 先后合并到同一个分支。
 
-🎤 **关键认知**：冲突不是错误，是 Git 在说"这里需要人来决定"。**没有冲突说明你们的改动没有重叠，是好事；有冲突也不是失败。**
-
 ### 6.2 冲突标记长什么样
 
 打开有冲突的文件，会看到：
 
-```
-<<<<<<< HEAD
-这是 main 上的内容
-=======
-这是你的分支上的内容
->>>>>>> profile/bob
-```
+![p3.1](img/p3.1.png)
 
 | 标记 | 含义 |
 | --- | --- |
 | `<<<<<<< HEAD` | 冲突开始，下面是你当前所在分支（或合并目标）的内容 |
 | `=======` | 分隔线 |
-| `>>>>>>> profile/bob` | 冲突结束，上面是另一方（这个 PR 分支）的内容 |
+| `>>>>>>> origin/docs` | 冲突结束，上面是另一方（这个 PR 分支）的内容 |
 
 ### 6.3 解决冲突的四个动作
 
 1. **打开文件**，搜索 `<<<<<<<`，找到每一处冲突。
 2. **决定内容**：保留你的、保留对方的、或两边都保留/改写。
 3. **删除全部标记行**（`<<<<<<<`、`=======`、`>>>>>>>`）。
-4. **保存 -> add -> 提交**：
-
-```bash
-git add conflict.md
-git commit
-```
-
-> 合并冲突的提交不需要 `-m`，Git 会给出默认的合并提交信息，直接保存退出即可。
+4. **保存 -> add -> 提交**.
 
 ✅ 判定标准：**文件里不再有任何 `<<<<<<<` / `=======` / `>>>>>>>`，内容符合你们商量的结果。**
 
-### 6.4 在 GitHub 网页上解决冲突（课堂上用这条路径）
+### 6.4 在 GitHub 网页上解决冲突
 
 PR 页面出现 **"This branch has conflicts that must be resolved"** 时：
 
@@ -444,7 +431,9 @@ PR 页面出现 **"This branch has conflicts that must be resolved"** 时：
 4. 点 **Commit merge**。
 5. 回到 PR，此时 **Merge** 按钮恢复可用。
 
-🎤 网页解决的好处是**不需要本地操作、适合大屏演示**；限制是文件很大或冲突很多时不好用，那时再回本地解决。
+![p3.2](img/p3.2.png)
+
+![p3.3](img/p3.3.png)
 
 ### 6.5 如何减少冲突
 
@@ -456,168 +445,4 @@ PR 页面出现 **"This branch has conflicts that must be resolved"** 时：
 | 团队提前说清谁改哪一块 | 避免同一区域重复修改 |
 | 不要顺手格式化整个文件 | 会制造大量无关的行变更，冲突面积剧增 |
 
-### 6.6 关于 rebase
-
-Git 还有 `rebase` 可以"整理历史"。**本次课程不使用**，原因是它会重写提交记录，一旦出错比 merge 难恢复得多。
-
-🎤 学员问到就回答："知道有这个选项就够了，等你熟练使用 merge 之后再学。"**不要在课堂上演示 rebase**，否则第七部分的冲突练习会失控。
-
-✅ 本部分验收（口头抽查）
-- 看到三段式标记，能说出哪一段是自己的。
-- 说出解决冲突后的最后一步（add + commit）。
-
----
-
-## 第七部分：练习 3 — 制造并解决冲突（25 分钟）
-
-### 组织方式（关键）
-
-⚠️ **绝不要让 40 人同时修改同一个 `conflict.md`。** 那样产生的是一团互相干扰的烂摊子，不是可讲解的冲突。
-
-本节课采用：
-
-1. **全班主演示**（约 10 分钟）：由教师操作，大屏同步，全班观看 1 次完整冲突。
-2. **两人一组练习**（约 15 分钟）：每组修改自己的 `conflict-group-<组号>.md`，亲手解决一次。
-
-> 课前准备：在仓库中预置 `conflict-group-01.md` … `conflict-group-20.md`，内容与 `conflict.md` 相同。
-
-### 7.1 教师主演示（10 分钟）
-
-🎤 按下面的顺序做，每一步都说明"现在在哪个分支、改动在哪个区域"。
-
-1. 展示 `conflict.md` 的初始内容（只有一行测试文字）。
-2. 学生 A 的分支把**第一行**改成 A 的内容 -> push -> 开 PR。
-3. 学生 B 的分支把**同一行**改成 B 的内容 -> push -> 开 PR。
-4. 先合并 A 的 PR：成功，`main` 现在是 A 的内容。
-5. 打开 B 的 PR：显示 **This branch has conflicts that must be resolved**。
-   > 讲："B 的改动是基于旧内容写的，而 `main` 已经变了，Git 不知道留哪句。"
-6. 点 **Resolve conflicts**，展示三段式标记。
-7. 现场决定：保留 B 的内容，或两句话都保留——**并说明为什么这样决定**。
-8. 删除标记 -> **Mark as resolved** -> **Commit merge**。
-9. 回到 PR -> **Merge pull request**。
-10. 打开 `main` 上的最终文件，确认没有残留标记，内容符合预期。
-
-🎤 演示后必须问一句："**刚才哪一步是 Git 做不了的？**" 答案：第 7 步的内容取舍，只有人能决定。
-
-### 7.2 两人一组练习（15 分钟）
-
-每组使用 `conflict-group-<组号>.md`，步骤：
-
-1. 两人都先 `git switch main && git pull`，拿到最新代码。
-2. 各自建分支：`git switch -c conflict/<username>`。
-3. 各自修改 `conflict-group-<组号>.md` 的**第一行**为不同内容，commit、push、开 PR。
-4. 先合并第一个人的 PR。
-5. 第二个人刷新自己的 PR，看到冲突 -> **Resolve conflicts**。
-6. 小组商量保留什么内容，然后在网页里解决，提交合并。
-7. 两人都 `git switch main && git pull`，确认最终文件内容一致。
-
-### ✅ 练习 3 验收标准
-
-- [ ] 本组的两个 PR 状态都是 **Merged**
-- [ ] 最终文件中**没有任何** `<<<<<<<`、`=======`、`>>>>>>>` 残留
-- [ ] 最终内容是小组成员事先商量的结果（不是随手留一句）
-- [ ] 两人本地 `main` 都已 `pull` 到最新
-- [ ] 能口头说出：冲突是谁造成的？（不是谁写错了，是同一区域被改了两次）
-
-### ⚠️ 练习 3 常见故障
-
-| 现象 | 原因 | 处理 |
-| --- | --- | --- |
-| 一看到冲突就慌 | 认知问题 | 提醒：这是正常流程，不是操作失误 |
-| 忘了删标记就提交 | 疏漏 | 搜索 `<<<<<<<` 全删干净再提交 |
-| 解决后对方的改动丢了 | 直接整段覆盖 | 用 `git diff main` 对比，或重新打开冲突重做 |
-| 改完没 add 就直接合并 | 冲突未标记为已解决 | 先 `git add <file>` |
-| 想放弃这次合并 | — | 本地：`git merge --abort` |
-| 冲突解决完，Merge 仍是灰色 | 网页状态未刷新 | 刷新页面；检查是否仍有未解决的冲突文件 |
-
-🎤 **收尾话术**：
->
 > "冲突本身不可怕。真正的事故是把别人的改动覆盖掉，还悄悄合并了进去。所以解决冲突时，**先看清两边在说什么，再决定留什么**。"
-
----
-
-## 附录 A：命令速查表
-
-| 我想…… | 命令 |
-| --- | --- |
-| 下载仓库 | `git clone <url>` |
-| 看当前状态 | `git status` |
-| 看还没暂存的改动 | `git diff` |
-| 看已暂存的改动 | `git diff --staged` |
-| 新建并切换分支 | `git switch -c <branch>` |
-| 切换分支 | `git switch <branch>` |
-| 列出本地分支 | `git branch` |
-| 列出所有分支（含远程） | `git branch -a` |
-| 重命名当前分支 | `git branch -m <new-name>` |
-| 暂存指定文件 | `git add <file>` |
-| 提交 | `git commit -m "说明"` |
-| 看历史 | `git log --oneline` |
-| 推送并建立跟踪 | `git push -u origin <branch>` |
-| 拉取并合并 | `git pull` |
-| 删除已合并的本地分支 | `git branch -d <branch>` |
-| 删除远程分支 | `git push origin --delete <branch>` |
-| 撤销工作区改动 | `git restore <file>` |
-| 取消暂存 | `git restore --staged <file>` |
-| 放弃本次合并 | `git merge --abort` |
-
-## 附录 B：GitHub Desktop 对照
-
-| Git 命令 | GitHub Desktop 操作 |
-| --- | --- |
-| `git clone` | File -> Clone repository |
-| `git switch -c` | Current Branch -> New Branch |
-| `git switch` | Current Branch -> 选择分支 |
-| `git status` / `git diff` | Changes 标签 |
-| `git add` | Changes 中勾选文件 |
-| `git commit` | Summary + Commit to `<branch>` |
-| `git push` | Push origin |
-| `git pull` | Fetch origin / Pull origin |
-| `git log` | History 标签 |
-| `git branch -d` | Branch -> Delete |
-
-## 附录 C：故障排查总表
-
-| 现象 | 先查什么 |
-| --- | --- |
-| `Repository not found` | 组织邀请是否已接受；仓库地址是否正确 |
-| `Permission denied (publickey)` | 换用 HTTPS 地址，或在 Desktop 里重新登录 |
-| `Please tell me who you are` | `git config --global user.name / user.email` |
-| `nothing to commit` | 文件是否保存；是否已经 add |
-| `Updates were rejected` | 先 `git pull` 再 `git push` |
-| Merge 按钮灰色 | PR 页面的提示文字：冲突？权限？检查未通过？ |
-| 文件里有 `<<<<<<<` | 冲突没解决完，不能提交 |
-| 本地看不到别人的改动 | `git switch main && git pull` |
-| 不确定自己在哪 | `git status` 第一行 / Desktop 顶部 |
-
-## 附录 D：教师检查清单
-
-**课前**
-
-- [ ] 仓库已创建，`main` 可 clone，`profile/` 与 `conflict.md` 已就位
-- [ ] 已预置 `conflict-group-01..20.md`
-- [ ] 全员已加入组织且具备 Write 权限
-- [ ] 已完成两人配对，并公布"谁 review 谁"
-- [ ] 完成率统计，未完成者已安排补装
-- [ ] 演示用仓库、浏览器标签页、大屏已就绪
-
-**课中**
-
-- [ ] 第零部分遗留问题只由助教单独处理
-- [ ] 每部分结束做一次口头验收，不通过不进入下一部分
-- [ ] 练习 1 结束前确认"网页上看不到文件"这一现象
-- [ ] 练习 2 用"先完成者先 review"避免排队
-- [ ] 练习 3 只做一次全班演示，其余分组进行
-- [ ] 预留 15 分钟机动时间
-
-**网络/环境故障预案**
-
-- 全员无法访问 GitHub：先做练习 1 的本地部分（clone 需要网络，可提前准备一份本地副本或离线 bundle），把 PR 环节改为演示。
-- 部分人推送失败：让这些人改为本地演示分支与提交，PR 环节由搭档代为操作，课后补做。
-- 时间不足：**砍第六部分讲授时长，不砍练习 2 和练习 3**。
-
-## 附录 E：课后练习
-
-1. 在你的 `profile/<username>.md` 中新增一行"我最想用 Git 做的三件事"，走完整的 9 步流程再提交一次 PR。
-2. 找一个自己的小项目，初始化 Git（`git init`），完成 3 次有意义的提交。
-3. 阅读自己已合并的 PR，尝试用 `Request changes` 给同学留一条改进建议。
-4. 提前预习：`git revert`（安全地撤销一次已合并的提交）。
