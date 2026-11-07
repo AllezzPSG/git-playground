@@ -451,3 +451,6 @@ PR 页面出现 **"This branch has conflicts that must be resolved"** 时：
 
 - .gitignore：告诉 git 忽略什么文件
 - .gitattributes：告诉 git 如何处理某些文件
+- .github 文件夹：
+  - ISSUE_TEMPLATE：Issue 模板
+  - PULL_REQUEST_TEMPLATE：PR 模板
